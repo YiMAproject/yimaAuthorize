@@ -2,7 +2,14 @@
 return array(
     'yima_authorize' => array(
         'permissions' => array(
-            'test' => 'registered\service',
+            # registered service that must return PermissionInterface instance
+            'sample' => 'yimaAuthorize.Permission.Sample',
+        ),
+    ),
+
+    'service_manager' => array(
+        'invokables' => array(
+            'yimaAuthorize.Permission.Sample' => 'yimaAuthorize\Permission\PermissionSample',
         ),
     ),
 );
