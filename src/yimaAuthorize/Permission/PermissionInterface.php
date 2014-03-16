@@ -1,5 +1,6 @@
 <?php
 namespace yimaAuthorize\Permission;
+use yimaAuthorize\Guard\GuardInterface;
 
 /**
  * Interface PermissionInterface
@@ -49,14 +50,14 @@ interface PermissionInterface
      *
      * @param array $options
      *
-     * @return mixed
+     * @return self
      */
     public function factoryFromArray(array $options);
 
     /**
-     * Get ListenerAggregateInterface guard
+     * Get guard
      *
-     * @return mixed
+     * @return GuardInterface
      */
     public function getGuard();
 }

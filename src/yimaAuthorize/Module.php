@@ -1,6 +1,8 @@
 <?php
 namespace yimaAuthorize;
 
+use yimaAuthorize\Guard\GuardInterface;
+use yimaAuthorize\Permission\PermissionInterface;
 use yimaAuthorize\Service\PermissionsRegistry;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
@@ -39,6 +41,9 @@ class Module implements
         /** @var $sm \Zend\ServiceManager\ServiceManager */
         $sm = $application->getServiceManager();
 
+        /** @var $events \Zend\EventManager\EventManager */
+        $events = $application->getEventManager();
+
         // -------------------------------------------------------------------------------------
 
         $config = $application->getConfig();
@@ -48,12 +53,20 @@ class Module implements
 
         // add existance permissions to registry >>> {
         $permissions = (isset($config['permissions'])) ? $config['permissions'] : array();
+        /** @var $p PermissionInterface */
         foreach ($permissions as $name => $p) {
             if (is_string($p) && $sm->has($p)) {
                 $p = $sm->get($p);
             }
 
             PermissionsRegistry::add($p);
+
+            // register each permission guard to events
+            /** @var $guard GuardInterface */
+            $guard = $p->getGuard();
+            if ($guard) {
+                $events->attach($guard);
+            }
         }
         // <<< }
 

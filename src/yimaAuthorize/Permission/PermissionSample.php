@@ -1,5 +1,7 @@
 <?php
 namespace yimaAuthorize\Permission;
+use yimaAuthorize\Guard\GuardInterface;
+use yimaAuthorize\Guard\SampleRouteGuard;
 
 /**
  * Class PermissionSample
@@ -23,16 +25,18 @@ class PermissionSample implements PermissionInterface
      * Is allowed to features?
      *
      * @param null|string $role
-     * @param null|string $resource
+     * @param null|string $resource Route name
      * @param null|string $privilege
      *
      * @return boolean
      */
     public function isAllowed($role = null, $resource = null, $privilege = null)
     {
-        $ip = $_SERVER['SERVER_ADDR'];
-        // we have not access on localhost server
-        return !($ip == '127.0.0.1');
+        $ip = $this->getRoleIdentity();
+
+
+        // we have not access on localhost server for route name "skeleton-core"
+        return !($ip == '127.0.0.1' && $resource == 'skeleton-core');
     }
 
     /**
@@ -43,7 +47,7 @@ class PermissionSample implements PermissionInterface
      */
     public function getRoleIdentity()
     {
-
+        return $_SERVER['SERVER_ADDR'];
     }
 
     /**
@@ -53,7 +57,7 @@ class PermissionSample implements PermissionInterface
      */
     public function getStorageIdentity()
     {
-
+        return null;
     }
 
     /**
@@ -61,20 +65,20 @@ class PermissionSample implements PermissionInterface
      *
      * @param array $options
      *
-     * @return mixed
+     * @return self
      */
     public function factoryFromArray(array $options)
     {
-
+        return new self();
     }
 
     /**
-     * Get ListenerAggregateInterface guard
+     * Get guard
      *
-     * @return mixed
+     * @return GuardInterface
      */
     public function getGuard()
     {
-
+        return new SampleRouteGuard();
     }
 }
