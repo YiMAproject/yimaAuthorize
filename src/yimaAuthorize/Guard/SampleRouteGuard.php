@@ -1,13 +1,28 @@
 <?php
 namespace yimaAuthorize\Guard;
 
-use yimaAuthorize\Service\PermissionsRegistry;
+use yimaAuthorize\Permission\PermissionInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 
 class SampleRouteGuard implements GuardInterface
 {
     protected $listeners = array();
+
+    /**
+     * @var PermissionInterface
+     */
+    protected $permission;
+
+    /**
+     * Construct
+     *
+     * @param PermissionInterface $permission
+     */
+    public function __construct(PermissionInterface $permission)
+    {
+        $this->setPermission($permission);
+    }
 
     /**
      * {@inheritDoc}
@@ -27,7 +42,7 @@ class SampleRouteGuard implements GuardInterface
      */
     public function onRoute(MvcEvent $event)
     {
-        $service    = PermissionsRegistry::get($this->getPermissionName());
+        $service    = $this->getPermission();
 
         $match      = $event->getRouteMatch();
         $routeName  = $match->getMatchedRouteName();
@@ -48,19 +63,23 @@ class SampleRouteGuard implements GuardInterface
     }
 
     /**
-     * Get permission name
+     * Set permission object
      *
-     * @return string
+     * @param PermissionInterface $permission
      */
-    public function getPermissionName()
+    public function setPermission($permission)
     {
-        // now we have only write down a sample, you can use guards for every permissions
-        // - by setting permission name to class
+        $this->permission = $permission;
+    }
 
-        // we use this on getting service from PermissionsRegistry
-        // as you can see on onRoute method
-
-        return 'sample';
+    /**
+     * Get permission object
+     *
+     * @return PermissionInterface
+     */
+    public function getPermission()
+    {
+        return $this->permission;
     }
 
     /**

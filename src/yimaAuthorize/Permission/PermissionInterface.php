@@ -46,15 +46,6 @@ interface PermissionInterface
     public function getStorageIdentity();
 
     /**
-     * Factory from array
-     *
-     * @param array $options
-     *
-     * @return self
-     */
-    public function factoryFromArray(array $options);
-
-    /**
      * Get guard
      *
      * @return GuardInterface

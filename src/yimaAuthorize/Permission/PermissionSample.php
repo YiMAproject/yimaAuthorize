@@ -79,6 +79,6 @@ class PermissionSample implements PermissionInterface
      */
     public function getGuard()
     {
-        return new SampleRouteGuard();
+        return new SampleRouteGuard($this);
     }
 }

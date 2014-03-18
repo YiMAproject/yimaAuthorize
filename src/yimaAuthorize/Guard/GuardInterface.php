@@ -1,14 +1,15 @@
 <?php
 namespace yimaAuthorize\Guard;
 
+use yimaAuthorize\Permission\PermissionInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 
 interface GuardInterface extends ListenerAggregateInterface
 {
     /**
-     * Get permission name
+     * Get permission
      *
-     * @return string
+     * @return PermissionInterface
      */
-    public function getPermissionName();
+    public function getPermission();
 }
