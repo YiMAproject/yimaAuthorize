@@ -6,6 +6,8 @@ use yimaAuthorize\Permission\PermissionInterface;
 /**
  * Class PermissionsRegistry
  *
+ * @TODO: Using pluginInterface (service locator against registry)
+ *
  * @package yimaAuthorize\Service
  */
 class PermissionsRegistry

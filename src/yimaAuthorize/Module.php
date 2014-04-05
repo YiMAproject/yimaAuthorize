@@ -68,8 +68,9 @@ class Module implements
                 $events->attach($guard);
             }
         }
-        // <<< }
 
+        $sm->setService('yimaAuthorize.PermissionsRegistry', new PermissionsRegistry());
+        // <<< }
 	}
 
     /**
