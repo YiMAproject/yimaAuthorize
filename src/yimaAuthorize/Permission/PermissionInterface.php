@@ -31,19 +31,11 @@ interface PermissionInterface
     public function isAllowed($role = null, $resource = null, $privilege = null);
 
     /**
-     * Get identity name for current role
-     * exp. guest for site members
+     * Get Identity data for current authenticated role
      *
      * @return mixed
      */
-    public function getRoleIdentity();
-
-    /**
-     * Get Identity data about current role
-     *
-     * @return mixed
-     */
-    public function getStorageIdentity();
+    public function getIdentity();
 
     /**
      * Get guard

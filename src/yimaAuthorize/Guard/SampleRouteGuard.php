@@ -47,7 +47,10 @@ class SampleRouteGuard implements GuardInterface
         $match      = $event->getRouteMatch();
         $routeName  = $match->getMatchedRouteName();
 
-        if ($service->isAllowed($service->getRoleIdentity(), $routeName)) {
+        $role = $service->getIdentity();
+        $role = $role['REMOTE_ADDR'];
+
+        if ($service->isAllowed($role, $routeName)) {
             return;
         }
 

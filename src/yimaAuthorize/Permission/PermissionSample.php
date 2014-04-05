@@ -32,22 +32,8 @@ class PermissionSample implements PermissionInterface
      */
     public function isAllowed($role = null, $resource = null, $privilege = null)
     {
-        $ip = $this->getRoleIdentity();
-
-
         // we have not access on localhost server for route name "skeleton-core"
-        return !($ip == '127.0.0.1' && $resource == 'skeleton-core');
-    }
-
-    /**
-     * Get identity name for current role
-     * exp. guest for site members
-     *
-     * @return mixed
-     */
-    public function getRoleIdentity()
-    {
-        return $_SERVER['SERVER_ADDR'];
+        return !($role == '127.0.0.1' && $resource == 'skeleton-core');
     }
 
     /**
@@ -55,21 +41,9 @@ class PermissionSample implements PermissionInterface
      *
      * @return mixed
      */
-    public function getStorageIdentity()
+    public function getIdentity()
     {
-        return null;
-    }
-
-    /**
-     * Factory from array
-     *
-     * @param array $options
-     *
-     * @return self
-     */
-    public function factoryFromArray(array $options)
-    {
-        return new self();
+        return $_SERVER;
     }
 
     /**
