@@ -56,7 +56,7 @@ class SampleRouteGuard implements GuardInterface
 
         $event->setError('You have not authorized to access');
         $event->setParam('route', $routeName);
-        $event->setParam('identity', $service->getRoleIdentity());
+        $event->setParam('identity', $service->getIdentity());
         $event->setParam('exception', new \Exception('You are not authorized to access ' . $routeName));
 
         /* @var $app \Zend\Mvc\Application */

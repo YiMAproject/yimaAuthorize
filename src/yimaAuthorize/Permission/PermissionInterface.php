@@ -12,14 +12,6 @@ use yimaAuthorize\Guard\GuardInterface;
 interface PermissionInterface
 {
     /**
-     * Get name of this permission section
-     * - access from registry
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
      * Is allowed to features?
      *
      * @param null|string $role

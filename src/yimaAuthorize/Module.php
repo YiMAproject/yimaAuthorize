@@ -1,9 +1,7 @@
 <?php
 namespace yimaAuthorize;
 
-use yimaAuthorize\Guard\GuardInterface;
-use yimaAuthorize\Permission\PermissionInterface;
-use yimaAuthorize\Service\PermissionsRegistry;
+use yimaAuthorize\Service\PermissionsPluginManager;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -12,6 +10,8 @@ use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 use Zend\Mvc\Application;
 use Zend\Mvc\MvcEvent;
+
+use Zend\ServiceManager\Config as ServiceConfig;
 
 /**
  * Class Module
@@ -52,24 +52,26 @@ class Module implements
             : array();
 
         // add existance permissions to registry >>> {
-        $permissions = (isset($config['permissions'])) ? $config['permissions'] : array();
-        /** @var $p PermissionInterface */
-        foreach ($permissions as $name => $p) {
-            if (is_string($p) && $sm->has($p)) {
-                $p = $sm->get($p);
-            }
+        $permsConfig  = (isset($config['permissions'])) ? $config['permissions'] : array();
+        $permsConfig  = new ServiceConfig($permsConfig);
+        /** @var $permsManager \yimaAuthorize\Service\PermissionsPluginManager */
+        $permsManager = new PermissionsPluginManager($permsConfig);
 
-            PermissionsRegistry::add($p);
+        // register each permission guard to events
+        foreach ($permsManager->getRegisteredServices() as $srvcs) {
+            if (is_array($srvcs) && !empty($srvcs)) {
+                foreach ($srvcs as $prm) {
+                    $prm = $permsManager->get($prm);
 
-            // register each permission guard to events
-            /** @var $guard GuardInterface */
-            $guard = $p->getGuard();
-            if ($guard) {
-                $events->attach($guard);
+                    $guard = $prm->getGuard();
+                    if ($guard) {
+                        $events->attach($guard);
+                    }
+                }
             }
         }
 
-        $sm->setService('yimaAuthorize.PermissionsRegistry', new PermissionsRegistry());
+        $sm->setService('yimaAuthorize.PermissionsManager', $permsManager);
         // <<< }
 	}
 

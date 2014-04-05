@@ -11,17 +11,6 @@ use yimaAuthorize\Guard\SampleRouteGuard;
 class PermissionSample implements PermissionInterface
 {
     /**
-     * Get name of this permission section
-     * - access from registry
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'sample';
-    }
-
-    /**
      * Is allowed to features?
      *
      * @param null|string $role
