@@ -1,0 +1,32 @@
+{
+    "name": "rayamedia/yima-authorize",
+    "type": "yima-core-module",
+    "authors": [
+        {
+            "name": "Payam Naderi",
+            "email": "naderi.payam@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "rayamedia/yima-plugin-installer": "dev-master"
+    },
+    "extra": {
+        "yima-plugin-name": "yimaAuthorize"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "yimaAuthorize\\" : "src/"
+        },
+        "classmap" : [
+            "./Module.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.raya-media.com/"
+        }
+    ]
+}
