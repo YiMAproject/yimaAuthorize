@@ -24,9 +24,6 @@ class PermissionManagerFactory implements FactoryInterface {
         /** @var $application Application */
         $application = $serviceLocator->get('application');
 
-        /** @var $events \Zend\EventManager\EventManager */
-        $events = $application->getEventManager();
-
         // -------------------------------------------------------------------------------------
 
         $config = $application->getConfig();
@@ -39,20 +36,6 @@ class PermissionManagerFactory implements FactoryInterface {
         $permsConfig  = new ServiceConfig($permsConfig);
         /** @var $permsManager \yimaAuthorize\Service\PermissionsPluginManager */
         $permsManager = new PermissionsPluginManager($permsConfig);
-
-        // register each permission guard to events
-        foreach ($permsManager->getRegisteredServices() as $srvcs) {
-            if (is_array($srvcs) && !empty($srvcs)) {
-                foreach ($srvcs as $prm) {
-                    $prm = $permsManager->get($prm);
-
-                    $guard = $prm->getGuard();
-                    if ($guard) {
-                        $events->attach($guard);
-                    }
-                }
-            }
-        }
 
         return $permsManager;
         // <<< }
