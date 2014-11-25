@@ -1,7 +1,7 @@
 <?php
 namespace yimaAuthorize\Service;
 
-use yimaAuthorize\Permission\PermissionInterface;
+use yimaAuthorize\Auth\Permission\PermissionInterface;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ConfigInterface;
 

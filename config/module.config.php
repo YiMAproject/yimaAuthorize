@@ -9,7 +9,7 @@ return array(
          */
         'permissions' => array(
             'invokables' => array(
-                'yima_authorize.sample' => 'yimaAuthorize\Permission\PermissionSample',
+                'yima_authorize.sample' => 'yimaAuthorize\Auth\Permission\PermissionSample',
             ),
         ),
     ),
