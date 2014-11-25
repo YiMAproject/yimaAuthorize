@@ -5,11 +5,6 @@ use yimaAuthorize\Mvc\AuthorizeAbstractHelper;
 use Zend\View\Helper\HelperInterface;
 use Zend\View\Renderer\RendererInterface;
 
-/**
- * Class AuthorizeHelper
- *
- * @package yimaAuthorize\Mvc
- */
 class AuthorizeHelper extends AuthorizeAbstractHelper
     implements HelperInterface
 {

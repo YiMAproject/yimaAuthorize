@@ -1,7 +1,8 @@
 <?php
-namespace yimaAuthorize\Guard;
+namespace yimaAuthorize\Auth\Guard;
 
-use yimaAuthorize\Permission\PermissionInterface;
+use yimaAuthorize\Auth\Permission\PermissionInterface;
+
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 
@@ -50,9 +51,8 @@ class SampleRouteGuard implements GuardInterface
         $role = $service->getIdentity();
         $role = $role['REMOTE_ADDR'];
 
-        if ($service->isAllowed($role, $routeName)) {
+        if ($service->isAllowed($role, $routeName))
             return;
-        }
 
         $event->setError('You have not authorized to access');
         $event->setParam('route', $routeName);
@@ -66,13 +66,17 @@ class SampleRouteGuard implements GuardInterface
     }
 
     /**
-     * Set permission object
+     * Set permission Object
      *
-     * @param PermissionInterface $permission
+     * @param PermissionInterface $permission Permission
+     *
+     * @return $this
      */
-    public function setPermission($permission)
+    public function setPermission(PermissionInterface $permission)
     {
         $this->permission = $permission;
+
+        return $this;
     }
 
     /**

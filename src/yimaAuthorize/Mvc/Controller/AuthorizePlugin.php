@@ -5,11 +5,6 @@ use yimaAuthorize\Mvc\AuthorizeAbstractHelper;
 use Zend\Mvc\Controller\Plugin\PluginInterface;
 use Zend\Stdlib\DispatchableInterface as Dispatchable;
 
-/**
- * Class AuthorizeHelper
- *
- * @package yimaAuthorize\Mvc
- */
 class AuthorizePlugin extends AuthorizeAbstractHelper implements
     PluginInterface
 {

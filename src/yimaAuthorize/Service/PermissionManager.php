@@ -10,7 +10,7 @@ use Zend\ServiceManager\ConfigInterface;
  *
  * @package yimaAuthorize\Service
  */
-class PermissionsPluginManager extends AbstractPluginManager
+class PermissionManager extends AbstractPluginManager
 {
     /**
      * Constructor
@@ -25,6 +25,9 @@ class PermissionsPluginManager extends AbstractPluginManager
     /**
      * Validate the plugin
      *
+     * @param mixed $plugin
+     *
+     * @throws \Exception
      */
     public function validatePlugin($plugin)
     {

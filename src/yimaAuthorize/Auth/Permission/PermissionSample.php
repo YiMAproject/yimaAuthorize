@@ -1,13 +1,9 @@
 <?php
-namespace yimaAuthorize\Permission;
-use yimaAuthorize\Guard\GuardInterface;
-use yimaAuthorize\Guard\SampleRouteGuard;
+namespace yimaAuthorize\Auth\Permission;
 
-/**
- * Class PermissionSample
- *
- * @package yimaAuthorize\Permission
- */
+use yimaAuthorize\Auth\Guard\GuardInterface;
+use yimaAuthorize\Auth\Guard\SampleRouteGuard;
+
 class PermissionSample implements PermissionInterface
 {
     /**

@@ -3,11 +3,6 @@ namespace yimaAuthorize\Mvc;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-/**
- * Class AuthorizeAbstractHelper
- *
- * @package yimaAuthorize\Mvc
- */
 class AuthorizeAbstractHelper implements ServiceLocatorAwareInterface
 {
     /**

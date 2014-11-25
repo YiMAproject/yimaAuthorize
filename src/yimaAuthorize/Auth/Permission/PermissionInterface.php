@@ -1,6 +1,7 @@
 <?php
-namespace yimaAuthorize\Permission;
-use yimaAuthorize\Guard\GuardInterface;
+namespace yimaAuthorize\Auth\Permission;
+
+use yimaAuthorize\Auth\Guard\GuardInterface;
 
 /**
  * Interface PermissionInterface

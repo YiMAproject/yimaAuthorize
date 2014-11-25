@@ -37,19 +37,17 @@ class Module implements
         $events = $app->getEventManager();
         $sm     = $app->getServiceManager();
 
-        // register each permission guard to events
+        // register each permission's guard to event manager
         $permsManager = $sm->get('yimaAuthorize.PermissionsManager');
-        foreach ($permsManager->getRegisteredServices() as $srvcs) {
-            if (is_array($srvcs) && !empty($srvcs)) {
-                foreach ($srvcs as $prm) {
+        foreach ($permsManager->getRegisteredServices() as $services) {
+            if (is_array($services))
+                foreach ($services as $prm) {
                     /** @var $prm PermissionInterface */
                     $prm   = $permsManager->get($prm);
                     $guard = $prm->getGuard();
-                    if ($guard) {
+                    if ($guard)
                         $events->attach($guard);
-                    }
                 }
-            }
         }
 	}
 

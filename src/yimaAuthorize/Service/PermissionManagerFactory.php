@@ -6,11 +6,6 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\Config as ServiceConfig;
 
-/**
- * Class PermissionManagerFactory
- *
- * @package yimaAuthorize\Service
- */
 class PermissionManagerFactory implements FactoryInterface {
 
     /**
@@ -34,8 +29,8 @@ class PermissionManagerFactory implements FactoryInterface {
         // add existance permissions to registry >>> {
         $permsConfig  = (isset($config['permissions'])) ? $config['permissions'] : array();
         $permsConfig  = new ServiceConfig($permsConfig);
-        /** @var $permsManager \yimaAuthorize\Service\PermissionsPluginManager */
-        $permsManager = new PermissionsPluginManager($permsConfig);
+        /** @var $permsManager \yimaAuthorize\Service\PermissionManager */
+        $permsManager = new PermissionManager($permsConfig);
 
         return $permsManager;
         // <<< }
