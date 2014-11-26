@@ -1,12 +1,13 @@
 <?php
-namespace yimaAuthorize\Auth\Guard;
+namespace yimaAuthorize\Auth\Sample;
 
-use yimaAuthorize\Auth\Permission\PermissionInterface;
+use yimaAuthorize\Auth\GuardInterface;
+use yimaAuthorize\Auth\PermissionInterface;
 
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 
-class SampleRouteGuard implements GuardInterface
+class Guard implements GuardInterface
 {
     protected $listeners = array();
 

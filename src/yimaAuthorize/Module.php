@@ -1,7 +1,9 @@
 <?php
 namespace yimaAuthorize;
 
-use yimaAuthorize\Permission\PermissionInterface;
+use yimaAuthorize\Auth\GuardInterface;
+use yimaAuthorize\Auth\PermissionInterface;
+use yimaAuthorize\Service\PermissionManager;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -28,7 +30,8 @@ class Module implements
      *
      * @param EventInterface $e
      *
-     * @return array
+     * @throws \Exception
+     * @return void
      */
 	public function onBootstrap(EventInterface $e)
 	{
@@ -39,13 +42,20 @@ class Module implements
 
         // register each permission's guard to event manager
         $permsManager = $sm->get('yimaAuthorize.PermissionsManager');
+        if (!$permsManager instanceof PermissionManager)
+            throw new \Exception(sprintf(
+                'Invalid Permission Manager, It must be instance of "%s" but "%s" given.'
+                , 'PermissionManager'
+                , get_class($permsManager)
+            ));
+
         foreach ($permsManager->getRegisteredServices() as $services) {
             if (is_array($services))
                 foreach ($services as $prm) {
                     /** @var $prm PermissionInterface */
                     $prm   = $permsManager->get($prm);
                     $guard = $prm->getGuard();
-                    if ($guard)
+                    if ($guard && $guard instanceof GuardInterface)
                         $events->attach($guard);
                 }
         }

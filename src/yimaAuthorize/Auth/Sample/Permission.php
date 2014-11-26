@@ -1,10 +1,10 @@
 <?php
-namespace yimaAuthorize\Auth\Permission;
+namespace yimaAuthorize\Auth\Sample;
 
-use yimaAuthorize\Auth\Guard\GuardInterface;
-use yimaAuthorize\Auth\Guard\SampleRouteGuard;
+use yimaAuthorize\Auth\GuardInterface;
+use yimaAuthorize\Auth\PermissionInterface;
 
-class PermissionSample implements PermissionInterface
+class Permission implements PermissionInterface
 {
     /**
      * Is allowed to features?
@@ -38,6 +38,6 @@ class PermissionSample implements PermissionInterface
      */
     public function getGuard()
     {
-        return new SampleRouteGuard($this);
+        return new Guard($this);
     }
 }

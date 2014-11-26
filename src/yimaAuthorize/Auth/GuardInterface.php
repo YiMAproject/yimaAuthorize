@@ -1,7 +1,5 @@
 <?php
-namespace yimaAuthorize\Auth\Guard;
-
-use yimaAuthorize\Auth\Permission\PermissionInterface;
+namespace yimaAuthorize\Auth;
 
 use Zend\EventManager\ListenerAggregateInterface;
 
@@ -12,7 +10,7 @@ use Zend\EventManager\ListenerAggregateInterface;
  * Listeners Using Permission Object to get Access Control Data-
  * - such as issAllowed(blah, blah, ..);
  *
- * @package yimaAuthorize\Auth\Guard
+ * @package yimaAuthorize\Auth
  */
 interface GuardInterface extends ListenerAggregateInterface
 {
