@@ -1,9 +1,14 @@
 <?php
 namespace yimaAuthorize\Mvc;
+
+use Zend\Mvc\Controller\PluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManager;
+use Zend\View\HelperPluginManager;
 
-class AuthorizeAbstractHelper implements ServiceLocatorAwareInterface
+class AuthorizeAbstractHelper implements
+    ServiceLocatorAwareInterface
 {
     /**
      * @var ServiceLocatorInterface
@@ -15,12 +20,13 @@ class AuthorizeAbstractHelper implements ServiceLocatorAwareInterface
      *
      * @param $pname
      *
-     * @return \yimaAuthorize\Permission\PermissionInterface
+     * @return \yimaAuthorize\Auth\PermissionInterface
      */
     public function __invoke($pname)
     {
-        // get parent serviceLocator(SM) from pluginManagers
+        /** @var HelperPluginManager|PluginManager $sl */
         $sl = $this->getServiceLocator();
+        /** @var ServiceManager $sm */
         $sm = $sl->getServiceLocator();
 
         // get registered PermissionsManager service and retrieve plugin
