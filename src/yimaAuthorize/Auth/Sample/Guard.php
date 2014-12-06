@@ -1,6 +1,7 @@
 <?php
 namespace yimaAuthorize\Auth\Sample;
 
+use yimaAuthorize\Auth\AccessDeniedException;
 use yimaAuthorize\Auth\GuardInterface;
 use yimaAuthorize\Auth\PermissionInterface;
 
@@ -40,7 +41,7 @@ class Guard implements GuardInterface
      *
      * @param MvcEvent $event
      *
-     * @return void
+     * @return true
      */
     public function onRoute(MvcEvent $event)
     {
@@ -49,21 +50,17 @@ class Guard implements GuardInterface
         $match      = $event->getRouteMatch();
         $routeName  = $match->getMatchedRouteName();
 
-        $role = $service->getIdentity();
-        $role = $role['REMOTE_ADDR'];
+        if (!$service->getIdentity())
+            // User not authorized yet
+            if ($routeName == 'home')
+                // UnAuthorized User Only Access to Home
+                return true;
 
-        if ($service->isAllowed($role, $routeName))
-            return;
 
-        $event->setError('You have not authorized to access');
-        $event->setParam('route', $routeName);
-        $event->setParam('identity', $service->getIdentity());
-        $event->setParam('exception', new \Exception('You are not authorized to access ' . $routeName));
-
-        /* @var $app \Zend\Mvc\Application */
-        $app = $event->getTarget();
-
-        $app->getEventManager()->trigger(MvcEvent::EVENT_DISPATCH_ERROR, $event);
+        throw new AccessDeniedException(
+            'You have not authorized to access',
+            404
+        );
     }
 
     /**
@@ -85,7 +82,7 @@ class Guard implements GuardInterface
      *
      * @return PermissionInterface
      */
-    public function getPermission()
+    protected function getPermission()
     {
         return $this->permission;
     }

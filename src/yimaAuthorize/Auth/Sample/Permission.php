@@ -17,18 +17,22 @@ class Permission implements PermissionInterface
      */
     public function isAllowed($role = null, $resource = null, $privilege = null)
     {
-        // we have not access on localhost server for route name "skeleton-core"
-        return !($role == '127.0.0.1' && $resource == 'skeleton-core');
+        return false;
     }
 
     /**
-     * Get Identity data about current role
+     * Get Identity
      *
-     * @return mixed
+     * - if user authorized
+     *   it will get identity data for authorized user
+     * else
+     *   return false for unauthorized access
+     *
+     * @return mixed|false
      */
     public function getIdentity()
     {
-        return $_SERVER;
+        return false;
     }
 
     /**

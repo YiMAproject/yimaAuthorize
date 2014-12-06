@@ -21,7 +21,7 @@ class PermissionManagerFactory implements FactoryInterface {
 
         // -------------------------------------------------------------------------------------
 
-        $config = $application->getConfig();
+        $config = $serviceLocator->get('Config');
         $config = (isset($config['yima_authorize']) && is_array($config['yima_authorize']))
             ? $config['yima_authorize']
             : array();
