@@ -1,7 +1,10 @@
 <?php
 namespace yimaAuthorize\Auth\Sample;
 
+use Poirot\Collection\Entity;
+use yimaAuthorize\Auth\AbstractResource;
 use yimaAuthorize\Auth\GuardInterface;
+use yimaAuthorize\Auth\IdentityInterface;
 use yimaAuthorize\Auth\PermissionInterface;
 
 class Permission implements PermissionInterface
@@ -9,15 +12,35 @@ class Permission implements PermissionInterface
     /**
      * Is allowed to features?
      *
-     * @param null|string $role
-     * @param null|string $resource Route name
-     * @param null|string $privilege
+     * - get currently identity object if $role not passed
      *
+     * @param null|IdentityInterface $role
+     * @param null|AbstractResource $resource
+     *
+     * @throws \Exception
      * @return boolean
      */
-    public function isAllowed($role = null, $resource = null, $privilege = null)
+    public function isAllowed(IdentityInterface $role = null, /*Resource*/ $resource = null)
     {
-        return false;
+        $role = ($role) ?: $this->getIdentity();
+        if (!is_object($resource)
+            || (!$resource instanceof Resource || !method_exists($resource, 'getRouteName'))
+        )
+            throw new \Exception('Invalid Resource To Check The Permissions.');
+
+        $isAllowed = false;
+        switch($resource->getRouteName()) {
+            case 'home':
+                // all has access to home
+                $isAllowed = true;
+                break;
+            default:
+                if ($role->getUid() == 1)
+                    // only super admin access to all routes(pages)
+                    $isAllowed = true;
+        }
+
+        return $isAllowed;
     }
 
     /**
@@ -32,7 +55,15 @@ class Permission implements PermissionInterface
      */
     public function getIdentity()
     {
-        return false;
+        $identity = new Identity();
+
+        if (isset($_SESSION['auth_user'])) {
+            $session = $_SESSION['auth_user'];
+            $identity->setUid($session['uid']);
+            $identity->data()->setFrom(new Entity($session['data']));
+        }
+
+        return $identity;
     }
 
     /**

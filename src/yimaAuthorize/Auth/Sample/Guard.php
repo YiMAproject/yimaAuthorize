@@ -47,15 +47,23 @@ class Guard implements GuardInterface
     {
         $service    = $this->getPermission();
 
-        $match      = $event->getRouteMatch();
-        $routeName  = $match->getMatchedRouteName();
+        $resource  = new Resource();
+        $match     = $event->getRouteMatch();
+        $routeName = $match->getMatchedRouteName();
+        $resource->setRouteName($routeName);
 
-        if (!$service->getIdentity())
-            // User not authorized yet
-            if ($routeName == 'home')
-                // UnAuthorized User Only Access to Home
-                return true;
+        // Change current identity, use case only >>>> {
+        $identity = new Identity();
+        # change this number to any other that 1 cause denied access except of home
+        # see Permission class
+        $identity->setUid(1);
+        $identity->data()->set('full_name', 'Payam Naderi');
+        $identity->data()->set('mail', 'naderi.payam@gmail.com');
+        // <<<< }
 
+        if ($service->isAllowed($identity, $resource))
+            // Authorized User with Access
+            return true;
 
         throw new AccessDeniedException(
             'You have not authorized to access',
@@ -96,6 +104,10 @@ class Guard implements GuardInterface
      */
     public function detach(EventManagerInterface $events)
     {
-        // TODO: Implement detach() method.
+        foreach ($this->listeners as $index => $listener) {
+            if ($events->detach($listener)) {
+                unset($this->listeners[$index]);
+            }
+        }
     }
 }

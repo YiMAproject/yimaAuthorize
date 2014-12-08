@@ -13,18 +13,24 @@ interface PermissionInterface
     /**
      * Is allowed to features?
      *
-     * @param null|string $role
-     * @param null|string $resource
-     * @param null|string $privilege
+     * - get currently identity object if $role not passed
+     *
+     * @param null|IdentityInterface $role
+     * @param null|AbstractResource  $resource
      *
      * @return boolean
      */
-    public function isAllowed($role = null, $resource = null, $privilege = null);
+    public function isAllowed(IdentityInterface $role = null, /*AbstractResource*/ $resource = null);
 
     /**
-     * Get Identity data for current authenticated role
+     * Get Identity
      *
-     * @return mixed
+     * - if user authorized
+     *   it will get identity data for authorized user
+     * else
+     *   return false|empty IdentityInterface for unauthorized access
+     *
+     * @return IdentityInterface|false
      */
     public function getIdentity();
 
