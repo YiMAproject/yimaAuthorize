@@ -1,7 +1,7 @@
 <?php
 namespace yimaAuthorize\Auth\Sample;
 
-use Poirot\Collection\Entity;
+use Poirot\Core\Entity;
 use yimaAuthorize\Auth\AbstractResource;
 use yimaAuthorize\Auth\GuardInterface;
 use yimaAuthorize\Auth\IdentityInterface;
