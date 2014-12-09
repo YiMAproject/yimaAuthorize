@@ -45,7 +45,7 @@ class Guard implements GuardInterface
      */
     public function onRoute(MvcEvent $event)
     {
-        $service    = $this->getPermission();
+        $permission    = $this->getPermission();
 
         $resource  = new Resource();
         $match     = $event->getRouteMatch();
@@ -61,7 +61,7 @@ class Guard implements GuardInterface
         $identity->data()->set('mail', 'naderi.payam@gmail.com');
         // <<<< }
 
-        if ($service->isAllowed($identity, $resource))
+        if ($permission->isAllowed($identity, $resource))
             // Authorized User with Access
             return true;
 

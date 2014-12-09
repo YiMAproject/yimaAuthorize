@@ -1,7 +1,7 @@
 <?php
 namespace yimaAuthorize\Auth;
 
-use Poirot\Collection\Entity;
+use Poirot\Core\Entity;
 
 interface IdentityInterface
 {
@@ -26,6 +26,13 @@ interface IdentityInterface
      * @return null|string|int
      */
     function getUid();
+
+    /**
+     * Is Identity Authorized?
+     *
+     * @return boolean
+     */
+    function isAuthorized();
 
     /**
      * Get Identity Data

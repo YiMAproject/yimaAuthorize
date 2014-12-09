@@ -55,5 +55,15 @@ class Identity implements IdentityInterface
 
         return $this->data;
     }
+
+    /**
+     * Is Identity Authorized?
+     *
+     * @return boolean
+     */
+    function isAuthorized()
+    {
+        return $this->uid !== null;
+    }
 }
  
