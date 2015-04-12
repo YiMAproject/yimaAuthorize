@@ -8,6 +8,7 @@ use Poirot\AuthSystem\Authenticate\Interfaces\iIdentity;
 use Poirot\AuthSystem\Authorize\Interfaces\iAuthResource;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
 use yimaAuthorize\Auth\Interfaces\MvcAuthServiceInterface;
+use yimaAuthorize\Auth\Sample\Authorize\PermResource;
 
 class AuthService implements MvcAuthServiceInterface
 {
@@ -30,7 +31,7 @@ class AuthService implements MvcAuthServiceInterface
         $role = ($role) ?: $this->getAuthAdapter()->identity();
 
         if (!is_object($resource)
-            || (!$resource instanceof Resource || !method_exists($resource, 'getRouteName'))
+            || (!$resource instanceof PermResource || !method_exists($resource, 'getRouteName'))
         )
             throw new \Exception('Invalid Resource Type, Can`t Check The Permissions.');
 
@@ -50,6 +51,8 @@ class AuthService implements MvcAuthServiceInterface
             $authAdapter->addAuthentication(
                 new DigestFileAuthAdapter()
             );
+
+            $this->__authAdapter = $authAdapter;
         }
 
         return $this->__authAdapter;
@@ -62,6 +65,7 @@ class AuthService implements MvcAuthServiceInterface
      */
     public function getGuard()
     {
+        // set this as guard authService
         return new AuthServiceGuard($this);
     }
 }

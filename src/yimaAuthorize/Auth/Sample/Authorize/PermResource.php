@@ -1,9 +1,11 @@
 <?php
-namespace yimaAuthorize\Auth\Sample;
+namespace yimaAuthorize\Auth\Sample\Authorize;
 
-use yimaAuthorize\Auth\AbstractResource;
+use Poirot\AuthSystem\Authorize\Interfaces\iAuthResource;
+use Poirot\Core\AbstractOptions;
 
-class Resource extends AbstractResource
+class PermResource extends AbstractOptions
+    implements iAuthResource
 {
     protected $routeName;
 

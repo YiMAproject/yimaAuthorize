@@ -4,6 +4,7 @@ namespace yimaAuthorize\Auth\Sample;
 use Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException;
 use yimaAuthorize\Auth\Interfaces\AuthServiceInterface;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
+use yimaAuthorize\Auth\Sample\Authorize\PermResource;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 
@@ -50,7 +51,10 @@ class AuthServiceGuard implements GuardInterface
     {
         $authService = $this->authService;
 
-        kd('here');
+        $resource  = new PermResource();
+        $match     = $event->getRouteMatch();
+        $routeName = $match->getMatchedRouteName();
+        $resource->setRouteName($routeName);
 
         if ($authService->isAllowed(null, $resource))
             // Authorized User with Access
