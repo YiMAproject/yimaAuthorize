@@ -6,8 +6,9 @@ use yimaAuthorize\Auth\Interfaces\AuthServiceInterface;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
 use yimaAuthorize\Auth\Sample\Authorize\PermResource;
 use yimaAuthorize\Exception\AuthException;
+use yimaBase\Mvc\MvcEvent;
 use Zend\EventManager\EventManagerInterface;
-use Zend\Mvc\MvcEvent;
+use Zend\Http\Response;
 
 class AuthServiceGuard implements GuardInterface
 {
@@ -38,6 +39,12 @@ class AuthServiceGuard implements GuardInterface
             , array($this, 'onRoute')
             , -1000
         );
+
+        $this->listeners[] = $events->attach(
+            MvcEvent::EVENT_ERROR
+            , array($this, 'onError')
+            , 10001
+        );
     }
 
     /**
@@ -45,8 +52,6 @@ class AuthServiceGuard implements GuardInterface
      * in case of failed authorization check
      *
      * @param MvcEvent $event
-     *
-     * @return true
      */
     public function onRoute(MvcEvent $event)
     {
@@ -61,17 +66,34 @@ class AuthServiceGuard implements GuardInterface
             // Authorized User with Access
             return true;
 
-        // Redirect To Login Route,
-        // i'm not stop events probation so be aware of that ...
-        /*
-        $match->setMatchedRouteName('');
-        $match->setParam('controller', 'innClinic\Controller\Auth');
-        $match->setParam('action', 'login');
-        */
-
-        // or ....
-
         $authService->riseException(new AccessDeniedException());
+    }
+
+    function onError(MvcEvent $event)
+    {
+        $error = $event->getError();
+
+        if (!$error instanceof AuthException)
+            // no error, we're ok
+            return ;
+
+        if (get_class($error->getAuthService()) !== get_class($this->authService))
+            // we are only handle error rised from this service
+            return ;
+
+        // We Can Manipulate Event Result
+        // TODO Redirect to signing Page
+        $response = $event->getResponse();
+        $event->setResult($response);
+
+        // or
+        // $event->setResult(['this' => 'is_content']);
+
+        // We can stop further events -----
+        # $event->stopPropagation();
+
+        // and return result
+        // return $response;
     }
 
     /**
