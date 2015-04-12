@@ -71,10 +71,7 @@ class AuthServiceGuard implements GuardInterface
 
         // or ....
 
-        throw new AccessDeniedException(
-            'You have not authorized to access',
-            304
-        );
+        throw new AccessDeniedException();
     }
 
     /**

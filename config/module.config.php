@@ -17,7 +17,7 @@ return array(
         # used with ExceptionMvcStrategyListener
         'layout_exception' => [
             // Access Denied Template, Usually Rise From Guards
-            'Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException' => 'spec/denied',
+            'Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException' => 'spec/error',
         ],
     ),
 );
