@@ -1,5 +1,5 @@
 <?php
-namespace yimaAuthorize\Auth;
+namespace yimaAuthorize\Auth\Interfaces;
 
 use Zend\EventManager\ListenerAggregateInterface;
 
@@ -15,11 +15,11 @@ use Zend\EventManager\ListenerAggregateInterface;
 interface GuardInterface extends ListenerAggregateInterface
 {
     /**
-     * Set permission Object
+     * Set Authentication Service Object
      *
-     * @param PermissionInterface $permission Permission
+     * @param AuthServiceInterface $authService Permission
      *
      * @return $this
      */
-    public function setPermission(PermissionInterface $permission);
+    function setAuthService(AuthServiceInterface $authService);
 }

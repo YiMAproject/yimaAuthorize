@@ -1,7 +1,7 @@
 <?php
 namespace yimaAuthorize\Service;
 
-use yimaAuthorize\Auth\PermissionInterface;
+use yimaAuthorize\Auth\Interfaces\MvcAuthServiceInterface;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ConfigInterface;
 
@@ -10,7 +10,7 @@ use Zend\ServiceManager\ConfigInterface;
  *
  * @package yimaAuthorize\Service
  */
-class PermissionManager extends AbstractPluginManager
+class AuthServiceManager extends AbstractPluginManager
 {
     /**
      * Constructor
@@ -31,7 +31,7 @@ class PermissionManager extends AbstractPluginManager
      */
     public function validatePlugin($plugin)
     {
-        if ($plugin instanceof PermissionInterface) {
+        if ($plugin instanceof MvcAuthServiceInterface) {
             // we're okay
             return;
         }
