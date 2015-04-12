@@ -5,6 +5,7 @@ use yimaAuthorize\Auth\Interfaces\AuthServiceInterface;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
 use yimaAuthorize\Auth\Interfaces\MvcAuthServiceInterface;
 use yimaAuthorize\Service\AuthServiceManager;
+use yimaBase\Mvc\MvcEvent;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;

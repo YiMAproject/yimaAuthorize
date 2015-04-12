@@ -11,4 +11,13 @@ return array(
             ],
         ],
     ],
+
+    'view_manager' => array(
+        // Set Exceptions Specific LayoutScript
+        # used with ExceptionMvcStrategyListener
+        'layout_exception' => [
+            // Access Denied Template, Usually Rise From Guards
+            'Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException' => 'spec/denied',
+        ],
+    ),
 );

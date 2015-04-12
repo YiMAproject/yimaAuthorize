@@ -2,6 +2,7 @@
 namespace yimaAuthorize\Auth\Sample;
 
 use Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException;
+use Poirot\AuthSystem\Authenticate\Exceptions\UserNotActivatedException;
 use yimaAuthorize\Auth\Interfaces\AuthServiceInterface;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
 use yimaAuthorize\Auth\Sample\Authorize\PermResource;
@@ -60,9 +61,19 @@ class AuthServiceGuard implements GuardInterface
             // Authorized User with Access
             return true;
 
+        // Redirect To Login Route,
+        // i'm not stop events probation so be aware of that ...
+        /*
+        $match->setMatchedRouteName('');
+        $match->setParam('controller', 'innClinic\Controller\Auth');
+        $match->setParam('action', 'login');
+        */
+
+        // or ....
+
         throw new AccessDeniedException(
             'You have not authorized to access',
-            404
+            304
         );
     }
 
