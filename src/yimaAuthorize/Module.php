@@ -1,9 +1,10 @@
 <?php
 namespace yimaAuthorize;
 
-use yimaAuthorize\Auth\GuardInterface;
-use yimaAuthorize\Auth\PermissionInterface;
-use yimaAuthorize\Service\PermissionManager;
+use yimaAuthorize\Auth\Interfaces\AuthServiceInterface;
+use yimaAuthorize\Auth\Interfaces\GuardInterface;
+use yimaAuthorize\Auth\Interfaces\MvcAuthServiceInterface;
+use yimaAuthorize\Service\AuthServiceManager;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -41,8 +42,8 @@ class Module implements
         $sm     = $app->getServiceManager();
 
         // register each permission's guard to event manager
-        $permsManager = $sm->get('yimaAuthorize.PermissionsManager');
-        if (!$permsManager instanceof PermissionManager)
+        $permsManager = $sm->get('yimaAuthorize.AuthServiceManager');
+        if (!$permsManager instanceof AuthServiceManager)
             throw new \Exception(sprintf(
                 'Invalid Permission Manager, It must be instance of "%s" but "%s" given.'
                 , 'PermissionManager'
@@ -52,11 +53,14 @@ class Module implements
         foreach ($permsManager->getRegisteredServices() as $services) {
             if (is_array($services))
                 foreach ($services as $prm) {
-                    /** @var $prm PermissionInterface */
+                    /** @var $prm AuthServiceInterface */
                     $prm   = $permsManager->get($prm);
-                    $guard = $prm->getGuard();
-                    if ($guard && $guard instanceof GuardInterface)
-                        $events->attach($guard);
+                    if ($prm instanceof MvcAuthServiceInterface) {
+                        /** @var $prm MvcAuthServiceInterface */
+                        $guard = $prm->getGuard();
+                        if ($guard && $guard instanceof GuardInterface)
+                            $events->attach($guard);
+                    }
                 }
         }
 	}
@@ -70,9 +74,9 @@ class Module implements
     public function getServiceConfig()
     {
         return array(
-            'factories' => array(
-                'yimaAuthorize.PermissionsManager' => 'yimaAuthorize\Service\PermissionManagerFactory'
-            ),
+            'factories' => [
+                'yimaAuthorize.AuthServiceManager' => 'yimaAuthorize\Service\AuthServiceManagerFactory'
+            ],
         );
     }
 
@@ -85,9 +89,9 @@ class Module implements
     public function getViewHelperConfig()
     {
         return array(
-            'invokables' => array(
+            'invokables' => [
                 'authorize' => 'yimaAuthorize\Mvc\View\AuthorizeHelper'
-            ),
+            ],
         );
     }
 
@@ -100,9 +104,9 @@ class Module implements
     public function getControllerPluginConfig()
     {
         return array(
-            'invokables' => array(
+            'invokables' => [
                 'authorize' => 'yimaAuthorize\Mvc\Controller\AuthorizePlugin'
-            ),
+            ],
         );
     }
 
@@ -124,11 +128,11 @@ class Module implements
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__,
-                ),
-            ),
+                ],
+            ],
         );
     }
 }

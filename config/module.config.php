@@ -1,16 +1,14 @@
 <?php
-use yimaAuthorize\Service\PermissionManager;
-
 return array(
-    'yima_authorize' => array(
+    'yima_authorize' => [
         /**
-         * @see PermissionManager
+         * @see AuthServiceManager
          * @see Zend\ServiceManager\Config
          */
-        'permissions' => array(
-            'invokables' => array(
-                #'yima_authorize.sample' => 'yimaAuthorize\Auth\Sample\Permission',
-            ),
-        ),
-    ),
+        'services' => [
+            'invokables' => [
+                'yima_authorize.sample' => 'yimaAuthorize\Auth\Sample\AuthService',
+            ],
+        ],
+    ],
 );

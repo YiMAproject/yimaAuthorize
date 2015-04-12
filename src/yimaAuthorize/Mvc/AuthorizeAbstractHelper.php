@@ -1,6 +1,7 @@
 <?php
 namespace yimaAuthorize\Mvc;
 
+use yimaAuthorize\Auth\Interfaces\MvcAuthServiceInterface;
 use Zend\Mvc\Controller\PluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -20,7 +21,7 @@ class AuthorizeAbstractHelper implements
      *
      * @param $pname
      *
-     * @return \yimaAuthorize\Auth\PermissionInterface
+     * @return MvcAuthServiceInterface
      */
     public function __invoke($pname)
     {
@@ -30,7 +31,7 @@ class AuthorizeAbstractHelper implements
         $sm = $sl->getServiceLocator();
 
         // get registered PermissionsManager service and retrieve plugin
-        $permissionsManager = $sm->get('yimaAuthorize.PermissionsManager');
+        $permissionsManager = $sm->get('yimaAuthorize.AuthServiceManager');
 
         return $permissionsManager->get($pname);
     }
