@@ -2,10 +2,10 @@
 namespace yimaAuthorize\Auth\Sample;
 
 use Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException;
-use Poirot\AuthSystem\Authenticate\Exceptions\UserNotActivatedException;
 use yimaAuthorize\Auth\Interfaces\AuthServiceInterface;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
 use yimaAuthorize\Auth\Sample\Authorize\PermResource;
+use yimaAuthorize\Exception\AuthException;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\MvcEvent;
 
@@ -71,7 +71,7 @@ class AuthServiceGuard implements GuardInterface
 
         // or ....
 
-        throw new AccessDeniedException();
+        $authService->riseException(new AccessDeniedException());
     }
 
     /**
