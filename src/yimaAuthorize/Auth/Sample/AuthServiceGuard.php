@@ -64,7 +64,7 @@ class AuthServiceGuard implements GuardInterface
 
         if ($authService->isAllowed(null, $resource))
             // Authorized User with Access
-            return true;
+            return ;
 
         $authService->riseException(new AccessDeniedException());
     }
@@ -81,19 +81,22 @@ class AuthServiceGuard implements GuardInterface
             // we are only handle error rised from this service
             return ;
 
-        // We Can Manipulate Event Result
-        // TODO Redirect to signing Page
+        // We Can Output something with Event::setResult($res);
+
+        ## $res can be Response, ViewModel Instance or an array feed for Default ViewModel
         $response = $event->getResponse();
+        $response->getHeaders()->addHeaderLine('Location', '/auth/login');
+        $response->setStatusCode(302);
         $event->setResult($response);
 
-        // or
+        # or
         // $event->setResult(['this' => 'is_content']);
 
-        // We can stop further events -----
+        ## We can stop further events -----
         # $event->stopPropagation();
 
-        // and return result
-        // return $response;
+        ## and return result
+        # return $response;
     }
 
     /**
