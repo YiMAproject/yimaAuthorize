@@ -22,13 +22,13 @@ class AuthService implements MvcAuthServiceInterface
     /**
      * Is allowed to features?
      *
-     * @param null|iIdentity $role
      * @param null|iAuthResource $resource
+     * @param null|iIdentity     $role
      *
      * @throws \Exception
      * @return boolean
      */
-    function isAllowed(iIdentity $role = null, iAuthResource $resource = null)
+    function isAllowed(iAuthResource $resource = null, iIdentity $role = null)
     {
         $role = ($role) ?: $this->getAuthAdapter()->identity();
 

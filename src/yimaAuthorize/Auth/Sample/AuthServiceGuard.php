@@ -6,6 +6,7 @@ use yimaAuthorize\Auth\Interfaces\AuthServiceInterface;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
 use yimaAuthorize\Auth\Sample\Authorize\PermResource;
 use yimaAuthorize\Exception\AuthException;
+use yimaBase\Mvc\Application;
 use yimaBase\Mvc\MvcEvent;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Http\Response;
