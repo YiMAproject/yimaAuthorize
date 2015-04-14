@@ -7,7 +7,7 @@ return array(
          */
         'services' => [
             'invokables' => [
-                'yima_authorize.sample' => 'yimaAuthorize\Auth\Sample\AuthService',
+                # 'yima_authorize.sample' => 'yimaAuthorize\Auth\Sample\AuthService',
             ],
         ],
     ],
