@@ -7,6 +7,7 @@ use Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException;
 use Poirot\AuthSystem\Authenticate\Interfaces\iAuthenticateAdapter;
 use Poirot\AuthSystem\Authenticate\Interfaces\iIdentity;
 use Poirot\AuthSystem\Authorize\Interfaces\iAuthResource;
+use Poirot\AuthSystem\BaseIdentity;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
 use yimaAuthorize\Auth\Interfaces\MvcAuthServiceInterface;
 use yimaAuthorize\Auth\Sample\Authorize\PermResource;
@@ -49,7 +50,7 @@ class AuthService implements MvcAuthServiceInterface
     function getAuthAdapter()
     {
         if (!$this->__authAdapter) {
-            $authAdapter = new AggrAuthAdapter(get_class($this));
+            $authAdapter = new AggrAuthAdapter(new BaseIdentity(get_class($this)));
             $authAdapter->addAuthentication(
                 new DigestFileAuthAdapter()
             );

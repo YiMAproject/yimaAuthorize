@@ -63,7 +63,7 @@ class AuthServiceGuard implements GuardInterface
         $routeName = $match->getMatchedRouteName();
         $resource->setRouteName($routeName);
 
-        if ($authService->isAllowed(null, $resource))
+        if ($authService->isAllowed($resource, null))
             // Authorized User with Access
             return ;
 
