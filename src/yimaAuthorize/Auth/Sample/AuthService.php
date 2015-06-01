@@ -28,7 +28,7 @@ class AuthService implements MvcAuthServiceInterface
      * @throws \Exception
      * @return boolean
      */
-    function isAllowed(iAuthResource $resource = null, iIdentity $role = null)
+    function isAllowed(/*iAuthResource*/ $resource = null, /*iIdentity*/ $role = null)
     {
         $role = ($role) ?: $this->getAuthAdapter()->identity();
 
