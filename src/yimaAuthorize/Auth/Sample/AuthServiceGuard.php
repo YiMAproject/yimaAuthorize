@@ -2,7 +2,7 @@
 namespace yimaAuthorize\Auth\Sample;
 
 use Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException;
-use yimaAuthorize\Auth\Interfaces\AuthServiceInterface;
+use yimaAuthorize\Auth\AbstractAuthGuard;
 use yimaAuthorize\Auth\Interfaces\GuardInterface;
 use yimaAuthorize\Auth\Sample\Authorize\PermResource;
 use yimaAuthorize\Exception\AuthException;
@@ -11,25 +11,9 @@ use yimaBase\Mvc\MvcEvent;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Http\Response;
 
-class AuthServiceGuard implements GuardInterface
+class AuthServiceGuard extends AbstractAuthGuard
+    implements GuardInterface
 {
-    protected $listeners = array();
-
-    /**
-     * @var AuthServiceInterface
-     */
-    protected $authService;
-
-    /**
-     * Construct
-     *
-     * @param AuthServiceInterface $authService
-     */
-    public function __construct(AuthServiceInterface $authService)
-    {
-        $this->setAuthService($authService);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -98,35 +82,5 @@ class AuthServiceGuard implements GuardInterface
 
         ## and return result
         # return $response;
-    }
-
-    /**
-     * Set Authentication Service Object
-     *
-     * @param AuthServiceInterface $authService Permission
-     *
-     * @return $this
-     */
-    function setAuthService(AuthServiceInterface $authService)
-    {
-        $this->authService = $authService;
-
-        return $this;
-    }
-
-    /**
-     * Detach all previously attached listeners
-     *
-     * @param EventManagerInterface $events
-     *
-     * @return void
-     */
-    public function detach(EventManagerInterface $events)
-    {
-        foreach ($this->listeners as $index => $listener) {
-            if ($events->detach($listener)) {
-                unset($this->listeners[$index]);
-            }
-        }
     }
 }
