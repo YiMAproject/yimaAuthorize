@@ -20,8 +20,11 @@ interface AuthServiceInterface
     /**
      * Throw Exception
      *
-     * - usually inject $this as AuthService into AuthException
-     * - exception must have valid response code as error code
+     * - usually inject $this Object argument into AuthException Class
+     *   on return, so later to handle the error with guards we can
+     *   response only for errors that rise from related AuthService
+     *
+     * - recommend exception have valid http response code as exception code
      *
      * @param AccessDeniedException|\Exception $exception
      *
