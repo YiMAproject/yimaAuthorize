@@ -2,6 +2,7 @@
 namespace yimaAuthorize\Auth\Interfaces;
 use Poirot\AuthSystem\Authenticate\Exceptions\AccessDeniedException;
 use Poirot\AuthSystem\Authenticate\Interfaces\iAuthenticateProvider;
+use Poirot\AuthSystem\Authenticate\Interfaces\iIdentity;
 use Poirot\AuthSystem\Authorize\Interfaces\iAuthPermission;
 use yimaAuthorize\Exception\AuthException;
 
@@ -31,4 +32,14 @@ interface AuthServiceInterface
      * @throws AuthException
      */
     function riseException(\Exception $exception = null);
+
+    /**
+     * Get Authorized User Identity
+     *
+     * - identities must inject into adapter by auth services
+     *
+     * @throws \Exception Not Identity Available Or Set
+     * @return iIdentity
+     */
+    function identity();
 }
