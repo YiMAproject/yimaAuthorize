@@ -38,7 +38,7 @@ class AuthServiceManager extends AbstractPluginManager
 
         throw new \Exception(
             sprintf(
-                'Plugin of type %s is invalid; must implement PermissionInterface',
+                'Plugin of type %s is invalid; must implement MvcAuthServiceInterface',
                 is_object($plugin) ? get_class($plugin) : gettype($plugin)
             )
         );
